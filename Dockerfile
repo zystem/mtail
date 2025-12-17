@@ -5,7 +5,8 @@ COPY . /go/src/github.com/google/mtail
 RUN  make depclean && make install_deps && PREFIX=/go make STATIC=y -B install
 
 
-FROM scratch
+FROM alpine:latest
+RUN apk add --no-cache curl bash
 COPY --from=builder /go/bin/mtail /usr/bin/mtail
 ENTRYPOINT ["/usr/bin/mtail"]
 EXPOSE 3903
